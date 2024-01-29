@@ -26,15 +26,12 @@ def transform(data):
     df['web_pages'] = [','.join(map(str, l)) for l in df['web_pages']]
   # We have to reset the index if we use the print method and not just type the df in jup. notebook
     df = df.reset_index(drop=True)
-    print(df)
 # Remove columns with more than 50% NaN values
     missing_columns = df.loc[:, df.isna().mean() >= 0.5].columns
     df= df.drop(missing_columns, axis=1)
-    print(df)
-
-#------- i leave some space here for some filtering i experiment on -----
-
+    df.rename(columns= {'alpha_two_code' : 'acronym'})
     return df
+
 df = transform(data)
 df
 
