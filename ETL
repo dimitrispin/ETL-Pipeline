@@ -1,1 +1,30 @@
+# Import the necessary modules
 
+import requests
+from sqlalchemy import create_engine
+import numpy as np 
+import pandas as pd 
+
+
+#Extract the data from the API and convert the data to a json file
+
+def extract():
+    url = "http://universities.hipolabs.com/search?country=United+States"
+    data = requests.get(url).json()
+    return data
+#See the data into json format
+data=extract()
+
+#Load the data into pandas dataframe, make every necessary filtering we see fit
+
+def transform(data):
+    df = pd.DataFrame(data)
+    print(f"Total Number of universities from API: {len(data)}")
+
+  #We have the domains and the web pages in a list-like format, and we change that into a comma separated format
+    df['domains'] = [','.join(map(str, l)) for l in df['domains']]
+    df['web_pages'] = [','.join(map(str, l)) for l in df['web_pages']]
+
+    return df
+df = transform(data)
+df
