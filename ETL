@@ -25,6 +25,17 @@ def transform(data):
     df['domains'] = [','.join(map(str, l)) for l in df['domains']]
     df['web_pages'] = [','.join(map(str, l)) for l in df['web_pages']]
 
+
+------- i leave some space here for some filtering i experiment on -----
+
     return df
 df = transform(data)
 df
+
+# We load the data into a sqllite database or any database that we might have
+def load(df):
+    disk_engine = create_engine('sqlite:///my_lite_store.db')
+# We basically convert the dataframe into a table called unis
+    df.to_sql('unis', disk_engine, if_exists='replace')
+load(df)
+
